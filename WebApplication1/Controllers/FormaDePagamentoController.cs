@@ -1,5 +1,9 @@
-﻿using Enums;
+﻿using AutoMapper;
+using Enums;
+using FluxoCaixa.Context;
+using FluxoCaixa.DTO;
 using FluxoCaixa.Enums;
+using FluxoCaixa.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,37 +16,91 @@ namespace FluxoCaixa.Controllers
     [Route("[controller]")]
     public class FormaDePagamentoController : ControllerBase
     {
-        public FormaDePagamentoController()
+        private readonly FluxoContext _context;
+        private readonly IMapper _mapper;
+        public FormaDePagamentoController(FluxoContext context, IMapper mapper)
         {
+            _context = context;
+            _mapper = mapper;
         }
-            // Recupera os Tipos de Forma de pagamento
-            [HttpGet]
-            public IActionResult RecuperaFormaDePagamento()
+
+        // Adiciona uma nova Forma de Pagamento
+        [HttpPost]
+        public IActionResult AdicionarFormaDePagemanto(
+            [FromBody] CreateFormaDePagamentoDTO formaDePagamentoDTO)
+        {
+            FormaDePagamento formaDePagamento = _mapper.Map<FormaDePagamento>(formaDePagamentoDTO);
+            _context.FormasDePagamento.Add(formaDePagamento);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(RecuperarFormasDePagamentoPorId),
+                new { id = formaDePagamento.IdFormaDePagamento },
+                formaDePagamento);
+        }
+
+
+
+        // Recupera os Tipos de Forma de pagamento
+        [HttpGet]
+        public IActionResult RecuperaFormaDePagamento()
+        {
+            var formaDePagamento = _context.FormasDePagamento
+            .Select(f => new
             {
-                var formaDePagamento = Enum.GetValues(typeof(EnTipoFormaDePagamento))
-                    .Cast<EnTipoFormaDePagamento>()
-                    .Select(f => new { Id = (int)f, Nome = f.GetDisplayName() })
-                    .ToList();
-                return Ok(formaDePagamento);
+                Id = f.IdFormaDePagamento,
+                Nome = f.TipoFormaDePagamento
+            }).ToList();
+            return Ok(formaDePagamento);
 
-            }
+        }
 
-            // Recupera os Fluxos pelo id
-            [HttpGet("{id}")]
-            public IActionResult RecuperarFormasDePagamentoPorId(int id)
-            {
-                var formaDePagamento = Enum.GetValues(typeof(EnTipoFormaDePagamento))
-                    .Cast<EnTipoFormaDePagamento>()
-                    .Select(f => new { Id = (int)f, Nome = f.GetDisplayName() })
-                    .Where(f => f.Id == id)
-                    .ToList();
-
+        // Recupera as Formas de Pagamento pelo id
+        [HttpGet("{id}")]
+        public IActionResult RecuperarFormasDePagamentoPorId(int id)
+        {
+                var formaDePagamento = _context.FormasDePagamento
+               .Where(f => f.IdFormaDePagamento == id)
+              .Select(c => new
+              {
+                  Id = c.IdFormaDePagamento,
+                  Nome = c.TipoFormaDePagamento
+              }).ToList();
+            
                 if (formaDePagamento == null || formaDePagamento.Count == 0)
                 {
-                    return NotFound("Nenhum custo encontrado para o tipo especificado.");
+                    return NotFound("Nenhuma forma de pagamento encontrado para o tipo especificado.");
                 }
                 return Ok(formaDePagamento);
-            }
         }
-    }
 
+        // Realiza a Alteração das Categorias
+        [HttpPut("{id}")]
+        public IActionResult AtualizarFormaDePagamento(int id, [FromBody] UpdateFormaDePagamentoDTO formaDePagamentoDTO)
+        {
+            FormaDePagamento formaDePagamento = _context.FormasDePagamento.FirstOrDefault(f => f.IdFormaDePagamento == id);
+            if (formaDePagamento == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(formaDePagamentoDTO, formaDePagamento);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        // Exclui as Categorias
+        [HttpDelete("{id}")]
+        public IActionResult ExcluirFormaDePagamento(int id)
+        {
+            FormaDePagamento formaDePagamento = _context.FormasDePagamento.FirstOrDefault(f => f.IdFormaDePagamento == id);
+            if (formaDePagamento == null)
+            {
+                return NotFound();
+            }
+            _context.Remove(formaDePagamento);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+
+    }
+}
+    

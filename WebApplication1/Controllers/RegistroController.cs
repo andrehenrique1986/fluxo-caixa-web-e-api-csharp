@@ -14,8 +14,8 @@ namespace FluxoCaixa.Controllers
     [Route("[controller]")]
     public class RegistroController : ControllerBase
     {
-        private FluxoContext _context;
-        private IMapper _mapper;
+        private readonly FluxoContext _context;
+        private readonly IMapper _mapper;
 
         public RegistroController(FluxoContext context, IMapper mapper)
         {
@@ -46,12 +46,12 @@ namespace FluxoCaixa.Controllers
                 {
                     Id = r.IdRegistro,
                     DataRegistro = r.DtRegistro,
-                    IdCategoria = r.IdCategoria,
-                    IdSubcategoria = r.IdSubcategoria,
-                    IdCusto = r.IdCusto,
-                    IdFluxo = r.IdFluxo,
-                    IdFormaDePagamento = r.IdFormaDePagamento,
-                    ValorRegistro = r.ValorRegistro
+                    CategoriaId = r.IdCategoria,
+                    SubcategoriaId = r.IdSubcategoria,
+                    CustoId = r.IdCusto,
+                    FluxoId = r.IdFluxo,
+                    FormaDePagamento = r.IdFormaDePagamento,
+                    Valor = r.ValorRegistro
                 }).ToList();
             if (registros == null) return NotFound();
             return Ok(registros);
@@ -68,12 +68,12 @@ namespace FluxoCaixa.Controllers
                 {
                     Id = r.IdRegistro,
                     DataRegistro = r.DtRegistro,
-                    IdCategoria = r.IdCategoria,
-                    IdSubcategoria = r.IdSubcategoria,
-                    IdCusto = r.IdCusto,
-                    IdFluxo = r.IdFluxo,
-                    IdFormaDePagamento = r.IdFormaDePagamento,
-                    ValorRegistro = r.ValorRegistro
+                    CategoriaId = r.IdCategoria,
+                    SubcategoriaId = r.IdSubcategoria,
+                    CustoId = r.IdCusto,
+                    FluxoId = r.IdFluxo,
+                    FormaDePagamentoId = r.IdFormaDePagamento,
+                    Valor = r.ValorRegistro
                 }).ToList();
             if (registros == null) return NotFound();
             return Ok(registros);

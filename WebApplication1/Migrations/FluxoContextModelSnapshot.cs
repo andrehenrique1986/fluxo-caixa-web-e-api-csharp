@@ -56,8 +56,9 @@ namespace FluxoCaixa.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("TipoFormaDePagamento")
-                        .HasColumnType("int");
+                    b.Property<string>("TipoFormaDePagamento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdFormaDePagamento");
 

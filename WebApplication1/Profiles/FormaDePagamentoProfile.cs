@@ -12,7 +12,9 @@ namespace FluxoCaixa.Profiles
     {
         public FormaDePagamentoProfile()
         {
+            CreateMap<CreateFormaDePagamentoDTO, FormaDePagamento>();
             CreateMap<FormaDePagamento, ReadFormaDePagamentoDTO>();
+            CreateMap<UpdateFormaDePagamentoDTO, FormaDePagamento>();
 
 
             CreateMap<FormaDePagamento, ReadFormaDePagamentoDTO>().

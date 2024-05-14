@@ -12,8 +12,7 @@ namespace FluxoCaixa.DTO
     {
         
         public int IdFormaDePagamento { get; set; }
-        public EnTipoFormaDePagamento TipoFormaDePagamento { get; set; }
-        public string DscTipoFormaDePagamento => TipoFormaDePagamento.GetDisplayName();
+        public string TipoFormaDePagamento { get; set; }
         public virtual ICollection<Registro> Registros { get; set; }
     }
 }

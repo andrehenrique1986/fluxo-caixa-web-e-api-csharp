@@ -25,21 +25,8 @@ namespace Enums
         VARIAVEL = 1
     }
 
-    public enum EnTipoFormaDePagamento
-    {
-        [Display(Name = "Cartão de Crédito")]
-        CARTAO_DE_CREDITO = 0,
 
-        [Display(Name = "Pix")]
-        PIX = 1,
-
-        [Display(Name = "Boleto")]
-        BOLETO = 2,
-
-        [Display(Name = "Débito")]
-        DEBITO = 3
-
-    }
+    
 }
 
 

@@ -15,8 +15,8 @@ namespace FluxoCaixa.Controllers
     [Route("[controller]")]
     public class SubcategoriaController: ControllerBase
     {
-        private FluxoContext _context;
-        private IMapper _mapper;
+        private readonly FluxoContext _context;
+        private readonly IMapper _mapper;
 
         public SubcategoriaController(FluxoContext context, IMapper mapper)
         {

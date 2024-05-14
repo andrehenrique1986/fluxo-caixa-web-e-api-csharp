@@ -16,10 +16,8 @@ namespace FluxoCaixa.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public int IdFormaDePagamento { get; set; }
-        [EnumDataType(typeof(EnTipoFormaDePagamento))]
         [Required(ErrorMessage = "A Descrição da Forma de Pagamento é obrigatória")]
-        public EnTipoFormaDePagamento TipoFormaDePagamento { get; set; }
-        public string DscTipoFormaDePagamento => TipoFormaDePagamento.GetDisplayName();
+        public string TipoFormaDePagamento { get; set; }
         public virtual ICollection<Registro> Registros { get; set; }
     }
 }
