@@ -6,3 +6,5 @@ build_property.ProjectTypeGuids =
 build_property.PublishSingleFile = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = FluxoCaixaWeb
+build_property.ProjectDir = C:\Users\andre.silva\Source\Repos\fluxo-caixa-web-e-api-csharp\FluxoCaixaWeb\
